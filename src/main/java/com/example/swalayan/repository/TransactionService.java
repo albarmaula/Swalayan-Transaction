@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,9 +36,8 @@ public class TransactionService {
         transaction.setYear(currentDateTime.getYear());
         transaction.setMonth(currentDateTime.getMonthValue());
         transaction.setDay(currentDateTime.getDayOfMonth());
-        transaction.setHour(currentDateTime.getHour());
-        transaction.setMinute(currentDateTime.getMinute());
-        transaction.setSecond(currentDateTime.getSecond());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        transaction.setTime(LocalTime.now().format(dtf));
         Transaction savedTransaction = transactionRepository.save(transaction);
         return transactionMapper.toDTO(savedTransaction);
     }
@@ -75,6 +76,14 @@ public class TransactionService {
     @Transactional
     public List<TransactionDTO> findTransactionsByYear(int year) {
         List<Transaction> transactions = transactionRepository.findByYear(year);
+        return transactions.stream()
+                .map(transactionMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<TransactionDTO> findByYearOrMonthOrDay(int year, int month, int day) {
+        List<Transaction> transactions = transactionRepository.findByYearOrMonthOrDay(year, month, day);
         return transactions.stream()
                 .map(transactionMapper::toDTO)
                 .collect(Collectors.toList());

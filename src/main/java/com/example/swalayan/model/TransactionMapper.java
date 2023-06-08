@@ -3,6 +3,8 @@ package com.example.swalayan.model;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
+
 @Component
 public class TransactionMapper {
     private final ModelMapper modelMapper;
@@ -17,9 +19,6 @@ public class TransactionMapper {
         transactionDTO.setYear(transaction.getYear());
         transactionDTO.setMonth(transaction.getMonth());
         transactionDTO.setDay(transaction.getDay());
-        transactionDTO.setHour(transaction.getHour());
-        transactionDTO.setMinute(transaction.getMinute());
-        transactionDTO.setSecond(transaction.getSecond());
         Employee employee = new Employee();
         employee.setNip(transaction.getNip());
         transactionDTO.setEmployee(employee);
@@ -31,9 +30,10 @@ public class TransactionMapper {
         transaction.setYear(transactionDTO.getYear());
         transaction.setMonth(transactionDTO.getMonth());
         transaction.setDay(transactionDTO.getDay());
-        transaction.setHour(transactionDTO.getHour());
-        transaction.setMinute(transactionDTO.getMinute());
-        transaction.setSecond(transactionDTO.getSecond());
+
+//        LocalTime currentTime = LocalTime.now();
+//        transaction.setTime(currentTime.toString());
+
         transaction.setNip(transactionDTO.getEmployee().getNip());
         return transaction;
     }

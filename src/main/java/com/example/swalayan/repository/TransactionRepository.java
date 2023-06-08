@@ -17,4 +17,6 @@ public interface TransactionRepository extends CrudRepository <Transaction, Long
 
     List<Transaction> findByNip(long nip);
 
+    @Query("from Transaction t where t.year = ?1 or t.month = ?2 or t.day = ?3")
+    List<Transaction> findByYearOrMonthOrDay(int year, int month, int day);
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "transaction")
@@ -16,9 +17,7 @@ public class Transaction implements Serializable {
     private int year;
     private int month;
     private int day;
-    private int hour;
-    private int minute;
-    private int second;
+    private String time;
     private int total_amount;
 
     @Column (name = "cashier", nullable = false)
@@ -27,14 +26,12 @@ public class Transaction implements Serializable {
     public Transaction() {
     }
 
-    public Transaction(Long id_trans, int year, int month, int day, int hour, int minute, int second, int total_amount, long nip) {
+    public Transaction(Long id_trans, int year, int month, int day, String time, int total_amount, long nip) {
         this.id_trans = id_trans;
         this.year = year;
         this.month = month;
         this.day = day;
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
+        this.time = time;
         this.total_amount = total_amount;
         this.nip = nip;
     }
@@ -71,28 +68,12 @@ public class Transaction implements Serializable {
         this.day = day;
     }
 
-    public int getHour() {
-        return hour;
+    public String getTime() {
+        return time;
     }
 
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-    public int getSecond() {
-        return second;
-    }
-
-    public void setSecond(int second) {
-        this.second = second;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getTotal_amount() {

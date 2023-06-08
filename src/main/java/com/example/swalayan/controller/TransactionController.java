@@ -88,6 +88,15 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
     }
 
+    @GetMapping("/date/{year}/{month}/{day}")
+    public ResponseEntity<List<TransactionDTO>> findByYearOrMonthOrDay(@PathVariable Integer year, Integer month, Integer day) {
+        List<TransactionDTO> transactions = transactionService.findByYearOrMonthOrDay(year, month, day);
+        if (transactions.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(transactions);
+    }
+
     @GetMapping("/nip/{nip}")
     public ResponseEntity<List<TransactionDTO>> findTransactionsByNip(@PathVariable Long nip) {
         List<TransactionDTO> transactions = transactionService.findTransactionsByNip(nip);
