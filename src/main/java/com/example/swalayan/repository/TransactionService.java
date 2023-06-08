@@ -10,6 +10,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,13 @@ public class TransactionService {
     @Transactional
     public TransactionDTO createTransaction(TransactionDTO transactionDTO) {
         Transaction transaction = transactionMapper.toEntity(transactionDTO);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        transaction.setYear(currentDateTime.getYear());
+        transaction.setMonth(currentDateTime.getMonthValue());
+        transaction.setDay(currentDateTime.getDayOfMonth());
+        transaction.setHour(currentDateTime.getHour());
+        transaction.setMinute(currentDateTime.getMinute());
+        transaction.setSecond(currentDateTime.getSecond());
         Transaction savedTransaction = transactionRepository.save(transaction);
         return transactionMapper.toDTO(savedTransaction);
     }
